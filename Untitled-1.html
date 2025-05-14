@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>日期星期查询</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            text-align: center;
+        }
+        .container {
+            background-color: #f5f5f5;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #333;
+        }
+        input, button {
+            padding: 10px;
+            margin: 10px;
+            font-size: 16px;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        #result {
+            margin-top: 20px;
+            font-size: 18px;
+            font-weight: bold;
+        }
+        .error {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>日期星期查询</h1>
+        <p>请输入一个日期，查看对应的星期几</p>
+        
+        <input type="date" id="dateInput">
+        <button onclick="showDayOfWeek()">查询</button>
+        
+        <p id="result"></p>
+    </div>
+
+    <script>
+        function showDayOfWeek() {
+            // 获取输入的日期
+            const dateInput = document.getElementById('dateInput').value;
+            const resultElement = document.getElementById('result');
+            
+            // 检查是否输入了日期
+            if (!dateInput) {
+                resultElement.textContent = "请先选择一个日期";
+                resultElement.className = "error";
+                return;
+            }
+            
+            try {
+                // 创建日期对象
+                const date = new Date(dateInput);
+                
+                // 获取星期几（0-6，0表示星期日）
+                const dayOfWeek = date.getDay();
+                
+                // 定义星期的中文名称
+                const days = ["星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六"];
+                
+                // 显示结果
+                resultElement.textContent = days[dayOfWeek];
+                resultElement.className = "";
+                
+            } catch (error) {
+                // 显示错误信息
+                resultElement.textContent = "日期格式不正确，请重新选择";
+                resultElement.className = "error";
+            }
+        }
+        
+        // 添加回车键事件监听
+        document.getElementById('dateInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                showDayOfWeek();
+            }
+        });
+    </script>
+</body>
+</html>
